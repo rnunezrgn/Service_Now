@@ -20,4 +20,4 @@
         close_notes: "Closed"
         assignment_group:  "Hardware" # some.group
         # number: "{{ change_request }}"
-        number: "{{ cr_number_created }}"
+        number: "{{ cr_number }}"
