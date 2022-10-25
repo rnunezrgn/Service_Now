@@ -35,7 +35,7 @@
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
 
-        state: assess
+        state: implement
         assignment_group:  "Hardware" # some.group
         number: "{{ cr_number }}"
         other:
