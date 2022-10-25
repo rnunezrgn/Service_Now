@@ -47,8 +47,8 @@
     - name: Printing the cr_number
       debug: 
         var: cr_number
-
-    - copy:
-        content: '{{ cr_number|to_json }}'
-        dest: cr_number.json
-      delegate_to: localhost
+#
+#    - copy:
+#        content: '{{ cr_number|to_json }}'
+#        dest: cr_number.json
+#      delegate_to: localhost
