@@ -1,0 +1,50 @@
+---
+- name: Update SNOW after approval and task complete
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    requested_by: ''
+    short_description: ''
+    description: ''
+
+  collections:
+    - servicenow.itsm
+    
+  tasks:
+    - name: Get timestamp from the system
+      shell: "date +%Y-%m-%d%H-%M-%S"
+      register: tstamp
+
+    - name: Set Resolved Date variables in format YYYY-MM-DD
+      ansible.builtin.set_fact:
+        resolved_time: "{{ tstamp_ns.stdout[10:]}}"
+
+    - name: Set Resolved Time variables in format HH-MM-SS
+      ansible.builtin.set_fact:
+        cur_time: "{{ tstamp.stdout[10:]}}"
+
+    - name: Update change request
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ SN_HOST }}" # Instance info provided by custom credential
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+
+        state: assess
+        assignment_group:  "Hardware" # some.group
+        number: "{{ cr_number }}"
+        other:
+          resolved_at: "{{ resolved_time }}"
+          time_worked: "{{ cir_time }}"
+      register: snow_var
+
+    - name: list output
+      debug: 
+        var: snow_var.record.number
+
+    - name: Saving the change request number for later 
+      ansible.builtin.set_stats:
+        data:
+          cr_number: "{{ snow_var.record.number }}"
+        per_host: no
