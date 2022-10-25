@@ -14,6 +14,7 @@
           host: "{{ SN_HOST }}"
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
+
         state: closed
         close_code: "successful"
         close_notes: "Closed"
