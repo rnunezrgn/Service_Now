@@ -14,8 +14,7 @@
           host: "{{ SN_HOST }}"
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
-
-        state: absent
+        state: closed
         close_code: "successful"
         close_notes: "Closed"
         assignment_group:  "Hardware" # some.group
