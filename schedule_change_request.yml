@@ -18,6 +18,10 @@
       shell: "date +%Y-%m-%d%H-%M-%S"
       register: tstamp
 
+    - name: Get timestamp from the system, include the first 5 nanoseconds digits
+      shell: "date +%Y-%m-%d%H-%M-%S.%5N"
+      register: tstamp_ns
+
     - name: Set Expected Time Start variables in format YYYY-MM-DD
       ansible.builtin.set_fact:
         expected_start: "{{ tstamp.stdout[10:]}}"

@@ -16,6 +16,10 @@
       shell: "date +%Y-%m-%d%H-%M-%S"
       register: tstamp
 
+    - name: Get timestamp from the system, include the first 5 nanoseconds digits
+      shell: "date +%Y-%m-%d%H-%M-%S.%5N"
+      register: tstamp_ns
+
     - name: Set Resolved Date variables in format YYYY-MM-DD
       ansible.builtin.set_fact:
         resolved_time: "{{ tstamp_ns.stdout[10:]}}"
@@ -35,8 +39,8 @@
         assignment_group:  "Hardware" # some.group
         number: "{{ cr_number }}"
         other:
-          resolved_at: "{{ resolved_time }}"
-          time_worked: "{{ cir_time }}"
+          resolved_at: "{{ resolved_time }}" # 2021-06-07
+          time_worked: "{{ cur_time }}"
       register: snow_var
 
     - name: list output
