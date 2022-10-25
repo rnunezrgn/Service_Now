@@ -1,0 +1,22 @@
+---
+- name: Contacting Service now instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  collections:
+    - servicenow.itsm
+    
+  tasks:
+    - name: Creating change request
+      servicenow.itsm.change_request_info:
+        instance:
+          host: "{{ SN_HOST }}"
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+        number: "{{ change_request }}"
+      register: result
+
+    - name: Results
+      debug:
+        var: result

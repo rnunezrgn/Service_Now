@@ -1,0 +1,23 @@
+---
+- name: Closing a change request in Service NOW
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  
+  collections:
+    - servicenow.itsm
+
+  tasks:
+    - name: Close change request
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ SN_HOST }}"
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+
+        state: absent
+        close_code: "successful"
+        close_notes: "Closed"
+        assignment_group:  "Hardware" # some.group
+        # number: "{{ change_request }}"
+        number: "{{ cr_number_created }}"

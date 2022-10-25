@@ -1,0 +1,25 @@
+---
+- name: Contacting Service now instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  
+  collections:
+    - servicenow.itsm
+    
+  tasks:
+    - name: Create a configuration item
+      servicenow.itsm.configuration_item:
+        name: HPE ProLiant BL465C G7
+        short_description: HPE ProLiant Server G7
+        serial_number: ECE-164-E10834-NO
+        asset_tag: P1000613
+        sys_class_name: cmdb_ci_server
+        assigned_to: some.user
+        environment: production
+        category: Hardware
+        attachments:
+          - path: path/to/attachment.txt
+        other:
+          model_number: BL465C G7
+      register: server

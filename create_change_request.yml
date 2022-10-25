@@ -1,0 +1,47 @@
+---
+- name: Contacting Service now instance
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    requested_by: ''
+    short_description: ''
+    description: ''
+    expected_start: '' 
+    # Use this format for date 2021-06-07
+
+  collections:
+    - servicenow.itsm
+    
+  tasks:
+    - name: Creating change request
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ SN_HOST }}" # Instance info provided by custom credential
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+
+        type: standard
+        state: new
+        requested_by: "{{ requested_by }}"
+        short_description: "{{ short_description }}" # Install Cisco Switch
+        description: "{{ description }}" #Please install new Cat. 6500 in Data center 01
+        priority: moderate
+        risk: low
+        impact: low
+
+        other:
+          expected_start: "{{ expected_start }}" # 2021-06-07
+      register: snow_var
+
+    - name: list output
+      debug: 
+        var: snow_var.record.number
+
+    - name: Saving the change request number for later 
+      ansible.builtin.set_fact:
+        cr_number: "{{ snow_var.record.number }}"
+
+    - name: Printing the cr_number
+      debug: 
+        var: cr_number
