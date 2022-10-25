@@ -39,9 +39,14 @@
         var: snow_var.record.number
 
     - name: Saving the change request number for later 
-      ansible.builtin.set_fact:
+      ansible.builtin.set_stats:
         cr_number: "{{ snow_var.record.number }}"
 
     - name: Printing the cr_number
       debug: 
         var: cr_number
+
+    - copy:
+        content: '{{ cr_number|to_json }}'
+        dest: cr_number.json
+      delegate_to: localhost
