@@ -28,7 +28,7 @@
       ansible.builtin.set_fact:
         cur_time: "{{ tstamp.stdout[10:]}}"
 
-    - name: Update change request
+    - name: Update and set to implement change request
       servicenow.itsm.change_request:
         instance:
           host: "{{ SN_HOST }}" # Instance info provided by custom credential
@@ -36,6 +36,21 @@
           password: "{{ SN_PASSWORD }}"
 
         state: implement
+        assignment_group:  "Hardware" # some.group
+        number: "{{ cr_number }}"
+        other:
+          resolved_at: "{{ resolved_time }}" # 2021-06-07
+          time_worked: "{{ cur_time }}"
+      register: snow_var
+
+    - name: Update to review change request
+      servicenow.itsm.change_request:
+        instance:
+          host: "{{ SN_HOST }}" # Instance info provided by custom credential
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+
+        state: review
         assignment_group:  "Hardware" # some.group
         number: "{{ cr_number }}"
         other:
