@@ -15,7 +15,7 @@
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
 
-        state: absent
+        state: implement
         close_code: "successful"
         close_notes: "Closed"
         assignment_group:  "Hardware" # some.group
