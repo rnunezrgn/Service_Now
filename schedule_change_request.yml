@@ -20,7 +20,7 @@
 
     - name: Set Expected Time Start variables in format YYYY-MM-DD
       ansible.builtin.set_fact:
-        expected_start: "{{ tstamp_ns.stdout[10:]}}"
+        expected_start: "{{ tstamp.stdout[10:]}}"
 
     - name: Scheduling change request
       servicenow.itsm.change_request:
